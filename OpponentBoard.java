@@ -27,13 +27,30 @@ public class OpponentBoard extends Board {
 
     public Boolean isHit(int row, int col){
         if (this.board[row][col] != this.token){
+            char t = this.board[row][col];
+            for (Ship s : this.Ships){
+                if (s.token == t){
+                    if (s.ShipLength > 0) {
+                        s.ShipLength -= 1;
+                    }
+                }
+            }
             return true;
         }
         return false;
     }
 
+    public boolean gameOver(){
+        for (Ship ship : this.Ships){
+            if (ship.ShipLength > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void addShips(){
-        Ship ship = new Ship(5,'B');
-        this.Ships.add(ship);
+        Ship battleship = new Ship(5,'B', "BATTLESHIP");
+        this.Ships.add(battleship);
     }
 }
