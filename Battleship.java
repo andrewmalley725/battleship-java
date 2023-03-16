@@ -9,28 +9,29 @@ public class Battleship {
         Board myBoard = new Board(boardlength);
         OpponentBoard oBoard = new OpponentBoard(boardlength);
 
-        try (Scanner scan = new Scanner(System.in)) {
+        // try (Scanner scan = new Scanner(System.in)) {
 
-            while(!oBoard.gameOver()){
+        //     while(!oBoard.gameOver()){
                 
-                System.out.print("Enter a row: ");
-                int row = scan.nextInt() - 1;
-                System.out.print("Enter a column: ");
-                int col = scan.nextInt() - 1;
+        //         System.out.print("Enter a row: ");
+        //         int row = scan.nextInt() - 1;
+        //         System.out.print("Enter a column: ");
+        //         int col = scan.nextInt() - 1;
 
-                if (oBoard.isHit(row, col)){
-                    oBoard.decrementShip(row, col);
-                    myBoard.reportHit(row, col);
-                }
-                else
-                {
-                    System.out.println("\nMISS!\n");
-                }
+        //         if (oBoard.isHit(row, col)){
+        //             oBoard.decrementShip(row, col);
+        //             myBoard.reportHit(row, col);
+        //         }
+        //         else
+        //         {
+        //             System.out.println("\nMISS!\n");
+        //         }
 
-                System.out.println();
-                myBoard.printBoard();
-            }
+        //         System.out.println();
+        //         myBoard.printBoard();
+        //     }
             
-        }
+        // }
+        oBoard.printBoard();
     }
 }
