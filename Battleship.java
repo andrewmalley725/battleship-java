@@ -19,11 +19,12 @@ public class Battleship {
                 int col = scan.nextInt() - 1;
 
                 if (oBoard.isHit(row, col)){
+                    oBoard.decrementShip(row, col);
                     myBoard.reportHit(row, col);
                 }
                 else
                 {
-                    System.out.println("Incorrect!");
+                    System.out.println("\nMISS!\n");
                 }
 
                 System.out.println();

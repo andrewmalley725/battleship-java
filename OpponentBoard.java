@@ -27,17 +27,27 @@ public class OpponentBoard extends Board {
 
     public Boolean isHit(int row, int col){
         if (this.board[row][col] != this.token){
-            char t = this.board[row][col];
-            for (Ship s : this.Ships){
-                if (s.token == t){
-                    if (s.ShipLength > 0) {
-                        s.ShipLength -= 1;
-                    }
-                }
-            }
+            
             return true;
         }
         return false;
+    }
+
+    public void decrementShip(int row, int col){
+        char t = this.board[row][col];
+        for (Ship s : this.Ships){
+            if (s.token == t){
+                if (s.ShipLength > 1) {
+                    System.out.println("HIT!");
+                    s.ShipLength -= 1;
+                }
+                else
+                {
+                    System.out.println("You sunk my " + s.name + '!');
+                    s.ShipLength -= 1;
+                }
+            }
+        }
     }
 
     public boolean gameOver(){
