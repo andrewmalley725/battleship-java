@@ -5,6 +5,7 @@ public class Board {
     public char[][] board;
     public int boardLength;
     public char token = '*';
+    public int numTrys = 8;
     
     public Board(int length){
         board = new char[length][length];
@@ -46,5 +47,6 @@ public class Board {
     public void reportMiss(int row, int col)
     {
         this.board[row][col] = 'O';
+        this.numTrys--;
     }
 }
