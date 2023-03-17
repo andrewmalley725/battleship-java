@@ -22,7 +22,7 @@ public class OpponentBoard extends Board {
     public void decrementShip(int row, int col){
         char t = this.board[row][col];
         for (Ship s : this.Ships){
-            if (s.token == t){
+            if (s.token == t && s.ShipLength > 0){
                 if (s.ShipLength > 1) {
                     System.out.println("HIT!");
                     s.ShipLength -= 1;
@@ -45,46 +45,61 @@ public class OpponentBoard extends Board {
         return true;
     }
 
-    // private boolean canPlace(Ship ship, int scol, int srow){
-    //     if (ship.orientation == "HORIZONTAL"){
-    //         int endcol;
-    //         if ((scol + (ship.ShipLength - 1) <= this.boardLength - 1) || (scol - (ship.ShipLength - 1) >= 0)){
-    //             if (scol + (ship.ShipLength - 1) <= this.boardLength - 1){
-    //                 endcol = scol + (ship.ShipLength - 1);
-    //                 for (int i = scol; i <= endcol; i++){
-    //                     this.board[srow][i] = ship.token;
-    //                 }
-    //             }
-    //             else if (scol - (ship.ShipLength - 1) >= 0){
-    //                 endcol = scol - (ship.ShipLength - 1);
-    //                 for (int i = scol; i >= endcol; i--){
-    //                     this.board[srow][i] = ship.token;
-    //                 }
-    //             }
-    //         }
-            
-    //     }
-    //     else if(ship.orientation == "VERTICAL"){
-    //         return true;
-    //     }
-    //     else if (ship.orientation == "DIAGONAL"){
-    //         return true;
-    //     }
-    //     return true;
-    // }
+    private boolean canPlace(Ship ship, int colStart, int rowStart)
+    {
+        boolean vool = true;
+
+        if (ship.orientation.equals("HORIZONTAL"))
+        {
+            int colEnd;
+
+            if (this.board[rowStart][colStart] != this.token)
+            {
+                vool = false;
+            }
+
+            else
+            {
+                if ((colStart + (ship.ShipLength - 1) <= this.boardLength - 1))
+                {
+                    colEnd = (colStart + (ship.ShipLength - 1));
+                    for (int i = colStart; i <= colEnd; i++){
+                        if (this.board[rowStart][i] != this.token){
+                            vool = false;
+                        }
+                    }
+                }
+                else
+                {
+                    colEnd = (colStart - (ship.ShipLength - 1));
+                    for (int i = colStart; i >= colEnd; i--){
+                        if (this.board[rowStart][i] != this.token){
+                            vool = false;
+                        }
+                    }
+                }
+            }
+        }
+        return vool;
+    }
+
 
     private void addShips(){
         Random random = new Random();
 
         //int randElement = random.nextInt(this.orientations.length);
 
-        Ship battleship = new Ship(5,'B', "BATTLESHIP", "HORIZONTAL");
+        Ship battleship = new Ship(4,'B', "BATTLESHIP", "HORIZONTAL");
         this.Ships.add(battleship);
 
-        // randElement = random.nextInt(this.orientations.length);
+        Ship cruiser = new Ship(3,'C', "CRUISER", "HORIZONTAL");
+        this.Ships.add(cruiser);
 
-        // Ship cruiser = new Ship(2,'C', "CRUISER", this.orientations[randElement]);
-        // this.Ships.add(cruiser);
+        Ship destroyer = new Ship(5,'D', "DESTROYER", "HORIZONTAL");
+        this.Ships.add(destroyer);
+
+        Ship submarine = new Ship(2,'S', "SUBMARINE", "HORIZONTAL");
+        this.Ships.add(submarine);
 
         for (Ship ship : this.Ships){
             int rowStart = random.nextInt(this.boardLength);
@@ -94,8 +109,17 @@ public class OpponentBoard extends Board {
             int count = ship.ShipLength;
             String orient = ship.orientation;
 
+            while (!this.canPlace(ship, colStart, rowStart))
+            {
+                rowStart = random.nextInt(this.boardLength);
+                colStart = random.nextInt(this.boardLength);
+                rowStartCopy = rowStart;
+                colStartCopy = colStart;
+            }
+
             while (count > 0){
                 this.board[rowStartCopy][colStartCopy] = ship.token;
+
                 if (orient == "DIAGONAL"){
                     rowStart++;
                     colStart++;
@@ -105,13 +129,14 @@ public class OpponentBoard extends Board {
                 }
                 else
                 {
-                    if ((colStart + (ship.ShipLength - 1) <= this.boardLength - 1) || (colStart - (ship.ShipLength - 1) >= 0))
+                    if (((colStart + (ship.ShipLength - 1) <= this.boardLength - 1) || (colStart - (ship.ShipLength - 1) >= 0)))
                     {
-                        if (colStart + (ship.ShipLength - 1) <= this.boardLength - 1)
+
+                        if (colStart + (ship.ShipLength - 1) < this.boardLength)
                         {
                             colStartCopy++;
                         }
-                        else
+                        else if ((colStart - (ship.ShipLength - 1) > -1))
                         {
                             colStartCopy--;
                         }
