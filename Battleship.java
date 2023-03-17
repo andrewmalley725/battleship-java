@@ -25,6 +25,7 @@ public class Battleship {
         //         else
         //         {
         //             System.out.println("\nMISS!\n");
+        //             myBoard.reportMiss(row, col);
         //         }
 
         //         System.out.println();
@@ -32,6 +33,7 @@ public class Battleship {
         //     }
             
         // }
+
         oBoard.printBoard();
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 public class OpponentBoard extends Board {
 
     private ArrayList<Ship> Ships = new ArrayList<Ship>();
-    private String[] orientations = {"DIAGONAL", "HORIZONTAL", "VERTICAL"};
+    private String[] orientations = {"HORIZONTAL", "VERTICAL"};
 
     public OpponentBoard(int length) {
         super(length);
@@ -80,14 +80,43 @@ public class OpponentBoard extends Board {
                 }
             }
         }
+        else
+        {
+            int rowEnd;
+
+            if (this.board[rowStart][colStart] != this.token)
+            {
+                vool = false;
+            }
+
+            else
+            {
+                if ((rowStart + (ship.ShipLength - 1) <= this.boardLength - 1))
+                {
+                    rowEnd = (rowStart + (ship.ShipLength - 1));
+                    for (int i = rowStart; i <= rowEnd; i++){
+                        if (this.board[i][colStart] != this.token){
+                            vool = false;
+                        }
+                    }
+                }
+                else
+                {
+                    rowEnd = (rowStart - (ship.ShipLength - 1));
+                    for (int i = rowStart; i >= rowEnd; i--){
+                        if (this.board[i][colStart] != this.token){
+                            vool = false;
+                        }
+                    }
+                }
+            }
+        }
         return vool;
     }
 
 
     private void addShips(){
         Random random = new Random();
-
-        //int randElement = random.nextInt(this.orientations.length);
 
         Ship battleship = new Ship(4,'B', "BATTLESHIP", "HORIZONTAL");
         this.Ships.add(battleship);
@@ -102,6 +131,10 @@ public class OpponentBoard extends Board {
         this.Ships.add(submarine);
 
         for (Ship ship : this.Ships){
+            
+            int randElement = random.nextInt(this.orientations.length);
+            ship.orientation = orientations[randElement];
+
             int rowStart = random.nextInt(this.boardLength);
             int colStart = random.nextInt(this.boardLength);
             int rowStartCopy = rowStart;
@@ -120,12 +153,20 @@ public class OpponentBoard extends Board {
             while (count > 0){
                 this.board[rowStartCopy][colStartCopy] = ship.token;
 
-                if (orient == "DIAGONAL"){
-                    rowStart++;
-                    colStart++;
-                }
-                else if (orient == "VERTICAL"){
-                    rowStart++;
+                if (orient == "VERTICAL"){
+
+                    if (((rowStart + (ship.ShipLength - 1) <= this.boardLength - 1) || (rowStart - (ship.ShipLength - 1) >= 0)))
+                    {
+
+                        if (rowStart + (ship.ShipLength - 1) < this.boardLength)
+                        {
+                            rowStartCopy++;
+                        }
+                        else if ((rowStart - (ship.ShipLength - 1) > -1))
+                        {
+                            rowStartCopy--;
+                        }
+                    }
                 }
                 else
                 {

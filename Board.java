@@ -17,7 +17,21 @@ public class Board {
     }
 
     public void printBoard(){
+        for (int i = 0; i <= this.board.length; i++)
+        {
+            if (i == 0)
+            {
+                System.out.print("  ");
+            }
+            else
+            {
+                System.out.print(i + " ");
+            }
+            
+        }
+        System.out.println();
         for (int row = 0; row < boardLength; row++){
+            System.out.print((row+1) + " ");
             for (int col = 0; col < boardLength; col++){
                 System.out.print(board[row][col] + " ");
             }
@@ -27,5 +41,10 @@ public class Board {
 
     public void reportHit(int row, int col){
         this.board[row][col] = 'X';
+    }
+
+    public void reportMiss(int row, int col)
+    {
+        this.board[row][col] = 'O';
     }
 }
