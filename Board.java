@@ -41,12 +41,36 @@ public class Board {
     }
 
     public void reportHit(int row, int col){
-        this.board[row][col] = 'X';
+        if(this.board[row][col] == 'X')
+        {
+            System.out.println("\nYou already hit there, guess again\n");
+        }
+        else
+        {
+            this.board[row][col] = 'X';
+        }
     }
 
     public void reportMiss(int row, int col)
     {
-        this.board[row][col] = 'O';
-        this.numTrys--;
+        if (this.board[row][col] == 'O')
+        {
+            System.out.println("\nYou already guessed there, guess again\n");
+        }
+        else
+        {
+            if (this.numTrys == 1)
+            {
+                System.out.println("\nOut of guesses, game over!\n");
+                this.numTrys--;
+            }
+            else
+            {
+                System.out.println("\nMISS!\n");
+                this.board[row][col] = 'O';
+                this.numTrys--;
+            }
+            
+        }
     }
 }

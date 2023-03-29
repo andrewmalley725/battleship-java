@@ -13,23 +13,34 @@ public class Battleship {
 
             while(!oBoard.gameOver() && myBoard.numTrys > 0){
                 
+                System.out.println();
+                myBoard.printBoard();
+                System.out.println();
+
                 System.out.print("Enter a row: ");
                 int row = scan.nextInt() - 1;
                 System.out.print("Enter a column: ");
                 int col = scan.nextInt() - 1;
 
                 if (oBoard.isHit(row, col)){
-                    oBoard.decrementShip(row, col);
+                    System.out.println();
+
+                    if (myBoard.board[row][col] != 'X')
+                    {
+                        oBoard.decrementShip(row, col);
+                    }
+                    
                     myBoard.reportHit(row, col);
                 }
                 else
                 {
-                    System.out.println("\nMISS!\n");
                     myBoard.reportMiss(row, col);
-                }
+                } 
+            }
 
-                System.out.println();
-                myBoard.printBoard();
+            if (oBoard.gameOver() || myBoard.numTrys == 0)
+            {
+                oBoard.printBoard();
             }
             
         }
