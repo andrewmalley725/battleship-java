@@ -38,7 +38,7 @@ public class Battleship {
                 } 
             }
 
-            if (oBoard.gameOver() || myBoard.numTrys == 0)
+            if (myBoard.numTrys == 0)
             {
                 oBoard.printBoard();
             }
